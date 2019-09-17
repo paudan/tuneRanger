@@ -68,7 +68,8 @@ tuneRanger = function(task, measure = NULL, iters = 70, iters.warmup = 30, time.
   
   type = getTaskType(task)
   size = getTaskSize(task)
-  NFeats = getTaskNFeats(task)
+  NFeats = ifelse("always.split.variables" %in% names(parameters), getTaskNFeats(task) - length(parameters[['always.split.variables']]), getTaskNFeats(task))
+  # NFeats = getTaskNFeats(task)
   
   predict.type = ifelse(type == "classif", "prob", "response")
   if(is.null(measure)) {
